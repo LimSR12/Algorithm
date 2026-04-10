@@ -1,33 +1,30 @@
 #include <iostream>
-
 using namespace std;
 
-static bool V[8];
-static int S[8];
-static int N, M;
+int N, M;
+int arr[10];       // 현재까지 선택한 수열
+bool used[10];     // 사용 여부
 
-void backtracking(int length) {
-	if (length == M) {
-		for (int i = 0; i < M; i++) {
-			cout << S[i] << ' ';
-		}
-		cout << "\n";
-		return;
-	}
+void backtrack(int depth) {
+    if (depth == M) {
+        for (int i = 0; i < M; i++)
+            cout << arr[i] << " ";
+        cout << "\n";
+        return;
+    }
 
-	for (int i = 0; i < N; i++) {
-		if (!V[i]) {
-			V[i] = true;
-			S[length] = i + 1;
-			backtracking(length + 1);
-			V[i] = false;
-		}
-	}
+    for (int i = 1; i <= N; i++) {
+        if (!used[i]) {
+            arr[depth] = i;
+            used[i] = true;
+            backtrack(depth + 1);
+            used[i] = false;
+        }
+    }
 }
 
-
 int main() {
-	cin >> N >> M;
-	backtracking(0);
-	return 0;
+    cin >> N >> M;
+    backtrack(0);
+    return 0;
 }
